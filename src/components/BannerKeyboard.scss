@@ -1,0 +1,158 @@
+@import "variables.scss";
+
+@mixin btn-number {
+  width: 88px;
+  height: 52px;
+  @include font;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  text-transform: uppercase;
+  color: $second-color;
+  border: 2px solid $second-color;
+  background-color: $main-color;
+}
+
+* {
+  box-sizing: border-box;
+  color: $second-color;
+}
+
+.banner-keyboard {
+  width: 380px;
+  height: 721px;
+  background-color: $main-color;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.banner-keyboard__wrapper {
+  @include box;
+  justify-content: center;
+  align-items: center;
+}
+
+.banner-keyboard__text {
+  @include font;
+  font-size: 14px;
+  line-height: 16px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.banner-keyboard__title {
+  @include font;
+  font-size: 26px;
+  line-height: 30px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.banner-keyboard__number {
+}
+
+.banner-keyboard__checkbox {
+  @include font;
+  font-size: 14px;
+  line-height: 16px;
+  display: flex;
+  align-items: center;
+  color: $back-opac-color;
+}
+.banner-keyboard__btn {
+  width: 284px;
+  height: 52px;
+  @include font;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  text-transform: uppercase;
+  border: 2px solid $back-opac-color;
+  color: #4e4e4e;
+  background-color: $main-color;
+}
+
+.keyboard__wrapper {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  width: 284px;
+  height: 238px;
+}
+
+.keyboard__number_hover:hover {
+  background-color: $second-color;
+  color: $main-color;
+  cursor: pointer;
+}
+
+.keyboard__number1 {
+  grid-area: 1 / 1 / 2 / 2;
+  @include btn-number;
+}
+.keyboard__number2 {
+  grid-area: 1 / 2 / 2 / 3;
+  @include btn-number;
+}
+.keyboard__number3 {
+  grid-area: 1 / 3 / 2 / 4;
+  @include btn-number;
+}
+.keyboard__number4 {
+  grid-area: 2 / 1 / 3 / 2;
+  @include btn-number;
+}
+.keyboard__number5 {
+  grid-area: 2 / 2 / 3 / 3;
+  @include btn-number;
+}
+.keyboard__number6 {
+  grid-area: 2 / 3 / 3 / 4;
+  @include btn-number;
+}
+.keyboard__number7 {
+  grid-area: 3 / 1 / 4 / 2;
+  @include btn-number;
+}
+.keyboard__number8 {
+  grid-area: 3 / 2 / 4 / 3;
+  @include btn-number;
+}
+.keyboard__number9 {
+  grid-area: 3 / 3 / 4 / 4;
+  @include btn-number;
+}
+.keyboard__number10 {
+  grid-area: 4 / 1 / 5 / 3;
+  width: 186px;
+  height: 52px;
+  @include font;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  text-transform: uppercase;
+  color: $second-color;
+  border: 2px solid $second-color;
+  background-color: $main-color;
+}
+.keyboard__number11 {
+  grid-area: 4 / 3 / 5 / 4;
+  @include btn-number;
+}
