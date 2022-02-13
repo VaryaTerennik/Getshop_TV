@@ -27,18 +27,6 @@ function GeneralPage() {
 
   const [progress, setProgress] = useState(0);
 
-  // useEffect(() => {
-  //   const timer = setInterval(() => {
-  //     setProgress((prevProgress) =>
-  //       prevProgress >= 100 ? 0 : prevProgress + 10
-  //     );
-  //     console.log("прошло 5 секунд", [progress]);
-  //   }, 1000);
-  //   return () => {
-  //     clearInterval(timer);
-  //   };
-  // }, [progress]);
-
   useEffect(() => {
     const timer = setInterval(() => {
       setProgress((prevProgress) => prevProgress + stateVideo.playedSeconds);

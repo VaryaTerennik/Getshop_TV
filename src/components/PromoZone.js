@@ -12,8 +12,6 @@ function PromoZone() {
       // onKeyDown={handlePressArrowKey}
       // items={myList}
       ></BannerKeyboard>
-
-      {<BannerFinal></BannerFinal>}
     </div>
   );
 }

@@ -1,0 +1,36 @@
+@import "variables.scss";
+.banner-final {
+  width: 380px;
+  height: 721px;
+  background-color: $main-color;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+.banner-final__wrapper {
+  @include box;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50%;
+  margin-left: 10%;
+  width: 284px;
+  height: 130px;
+}
+.banner-final__title {
+  @include font;
+  font-size: 26px;
+  line-height: 30px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+}
+.banner-final__text {
+  @include font;
+  font-size: 14px;
+  line-height: 16px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+}

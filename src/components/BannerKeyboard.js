@@ -3,9 +3,12 @@ import { useForm } from "react-hook-form";
 import { useEffect, useState, useRef } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import BannerFinal from "./BannerFinal";
 
 function BannerKeyboard() {
   const navigate = useNavigate();
+  const refBut = useRef(null);
+
   const items = [
     { id: "0", value: "1" },
     { id: "1", value: "2" },
@@ -21,14 +24,21 @@ function BannerKeyboard() {
     { id: "11", value: "ПОДТВЕРДИТЬ НОМЕР" },
     { id: "12", value: "X" },
   ];
-  console.log(items);
+
   const { register, handleSubmit, setValue, getValues, formState } = useForm({
     mode: "onChange",
   });
 
+  const [open, setOpen] = useState(false);
+
+  const handleOpenFinalBanner = () => {
+    setOpen(() => true);
+    console.log(open);
+  };
+
   const [pstate, setPstate] = useState({
     buttonsArr: [
-      { id: 0, isActive: false },
+      { id: 0, isActive: true },
       { id: 1, isActive: false },
       { id: 2, isActive: false },
       { id: 3, isActive: false },
@@ -45,15 +55,20 @@ function BannerKeyboard() {
     activeId: null,
   });
   const [number, setNumber] = useState([]);
+  const [valid, setValid] = useState(false);
 
-  const getDerivedStateFromProps = ({ items }, pstate) => {
-    const store = items.map((i, n) => ({ id: n, isActive: false }));
-    console.log(pstate.buttonsArr);
+  useEffect(() => {
+    refBut.current.focus();
+    console.log(refBut);
+  }, []);
 
-    setPstate(
-      pstate.buttonsArr.length ? null : pstate.buttonsArr.push(...store)
-    );
-  };
+  useEffect(() => {
+    if (number.length === 11) {
+      setValid(true);
+    } else {
+      setValid(false);
+    }
+  }, [number]);
 
   const checkKeys = (e) => {
     e.preventDefault();
@@ -62,11 +77,9 @@ function BannerKeyboard() {
       console.log(e.code);
       return;
     }
-    // const { buttonsArr, activeId } = { buttonsArr, activeId };
     let nextActiveId = pstate.activeId;
 
     if (pstate.activeId == null) {
-      // проверяем если ли уже выбранные блоки клавиатурой
       const newList = pstate.buttonsArr.map((i) =>
         i.id === 0 ? { ...i, isActive: true } : i
       );
@@ -96,8 +109,9 @@ function BannerKeyboard() {
       console.log(activeEl);
       if (+activeEl.id <= 10) {
         handleGetValueEnter(activeEl);
-      } else if (+activeEl.id === 11) {
+      } else if (+activeEl.id === 11 && valid === true) {
         handleSubmit(onFormSubmit)();
+        handleOpenFinalBanner();
       } else if (+activeEl.id === 12) {
         navigate("/");
       }
@@ -105,7 +119,6 @@ function BannerKeyboard() {
       return;
     }
 
-    // проверяем не вышли ли мы за границы блоков
     if (nextActiveId < 0 || nextActiveId > pstate.buttonsArr.length - 1) {
       return;
     }
@@ -117,8 +130,6 @@ function BannerKeyboard() {
       })),
       activeId: nextActiveId,
     });
-
-    // return pstate;
   };
 
   useEffect(() => {
@@ -132,26 +143,14 @@ function BannerKeyboard() {
     if (event.code.includes("Digit")) {
       const newNum = event.code.substring(event.code.length - 1);
       setNumber([...number, newNum]);
-      console.log(number);
     }
   };
 
-  // const handlePressKeyEnter = (event) => {
-  //   console.log(event.code);
-
-  //   if (event.code === "Enter" || event.code === "NumpadEnter") {
-  //     const activeEl = pstate.buttonsArr.find((el) => el.isActive === true);
-  //     console.log(activeEl);
-  //   } else {
-  //   }
-  // };
-
   const onFormSubmit = (data) => {
-    const number = {
+    const numberNew = {
       number: data.number,
       agreement: data.agreement,
     };
-    console.log(number);
   };
 
   const handleGetValue = (e) => {
@@ -161,7 +160,6 @@ function BannerKeyboard() {
       const delNumber = number.splice(number.length - 1, 1);
       setNumber([...number]);
     } else {
-      console.log(newNum);
       setNumber([...number, newNum]);
     }
   };
@@ -172,7 +170,6 @@ function BannerKeyboard() {
       const delNumber = number.splice(number.length - 1, 1);
       setNumber([...number]);
     } else {
-      console.log(newNum);
       setNumber([...number, newNum]);
     }
   };
@@ -190,12 +187,12 @@ function BannerKeyboard() {
           id={butt.id}
           value={butt.value}
           key={butt.id}
+          ref={refBut}
           className={
             i.isActive
               ? "active keyboard__number_hover"
               : "keyboard__number_hover"
           }
-          // className="keyboard__number_hover"
         >
           {butt.value}
         </button>
@@ -213,7 +210,6 @@ function BannerKeyboard() {
               id={butt.id}
               key={butt.id}
               type="submit"
-              // className="banner-keyboard__btn"
               className={
                 i.isActive ? "active promo__btn-close" : "promo__btn-close"
               }
@@ -223,7 +219,6 @@ function BannerKeyboard() {
           );
         }
       })}
-      {/* <button className="promo__btn-close">X</button> */}
       <div className="banner-keyboard">
         <form
           onSubmit={handleSubmit(onFormSubmit)}
@@ -234,6 +229,7 @@ function BannerKeyboard() {
           </div>
           <div className="banner-keyboard__number">
             <input
+              className="banner-keyboard__input"
               type="number"
               onKeyPress={handlePressKey}
               {...register("number", {
@@ -253,10 +249,19 @@ function BannerKeyboard() {
               {buttons}
             </div>
           </div>
-          <lable className="banner-keyboard__checkbox">
-            <input {...register("agreement")} type="checkbox" />
-            Согласие на обработку персональных данных
-          </lable>
+          {valid === true && (
+            <lable className="banner-keyboard__checkbox">
+              <input
+                {...register("agreement")}
+                type="checkbox"
+                checked="true"
+              />
+              Согласие на обработку персональных данных
+            </lable>
+          )}
+          {valid === false && (
+            <div className="banner-keyboard__valid">НЕВЕРНО ВВЕДЕН НОМЕР</div>
+          )}
           {items.map((butt) => {
             if (+butt.id === 11) {
               const i = pstate.buttonsArr.find((item) => item.id === +butt.id);
@@ -265,7 +270,8 @@ function BannerKeyboard() {
                   id={butt.id}
                   key={butt.id}
                   type="submit"
-                  // className="banner-keyboard__btn"
+                  onClick={handleOpenFinalBanner}
+                  disabled={!formState.isValid}
                   className={
                     i.isActive
                       ? "active banner-keyboard__btn"
@@ -279,6 +285,7 @@ function BannerKeyboard() {
           })}
         </form>
       </div>
+      {open === true && <BannerFinal />}
     </div>
   );
 }
