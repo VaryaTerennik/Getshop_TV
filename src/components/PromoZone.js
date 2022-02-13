@@ -8,7 +8,11 @@ function PromoZone() {
       <div className="promo__wrapper">
         <img src="images/promo.jpg" alt="promo" />
       </div>
-      <BannerKeyboard></BannerKeyboard>
+      <BannerKeyboard
+      // onKeyDown={handlePressArrowKey}
+      // items={myList}
+      ></BannerKeyboard>
+
       {<BannerFinal></BannerFinal>}
     </div>
   );
